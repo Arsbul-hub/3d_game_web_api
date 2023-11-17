@@ -4,7 +4,7 @@ import random
 
 from flask import request, jsonify
 
-from app import blueprint, server_manager
+from app import server_manager, app
 
 
 #from app.models import Servers
@@ -30,7 +30,7 @@ from app import blueprint, server_manager
 #     return jsonify({"status": "ok", "invite_code": invite_code})
 #
 
-@blueprint.route("/get_server", methods=["GET"])
+@app.route("/get_server", methods=["GET"])
 def get_server():
     # code = request.args.get("code")
 
@@ -44,7 +44,7 @@ def get_server():
                                                "server_name": server_manager.server.name}})
 
 
-@blueprint.route("/connect_user", methods=["POST"])
+@app.route("/connect_user", methods=["POST"])
 def connect_user():
     # code = request.args.get("code")
 
@@ -61,7 +61,7 @@ def connect_user():
     return jsonify({"status": "ok"})
 
 
-@blueprint.route("/update_user", methods=["GET"])
+@app.route("/update_user", methods=["GET"])
 def update_user():
     # code = request.args.get("code")
 
@@ -80,7 +80,7 @@ def update_user():
     return jsonify({"status": "ok"})
 
 
-@blueprint.route("/respawn_user", methods=["GET"])
+@app.route("/respawn_user", methods=["GET"])
 def respawn_user():
     # code = request.args.get("code")
 
@@ -99,7 +99,7 @@ def respawn_user():
     return jsonify({"status": "ok", "x": x, "y": y, "z": z})
 
 
-@blueprint.route("/hit_user", methods=["POST"])
+@app.route("/hit_user", methods=["POST"])
 def hit_user():
     # code = request.args.get("code")
 
@@ -116,7 +116,7 @@ def hit_user():
     return jsonify({"status": "ok"})
 
 
-@blueprint.route("/get_world", methods=["GET"])
+@app.route("/get_world", methods=["GET"])
 def get_world():
     # code = request.args.get("code")
 
@@ -130,7 +130,7 @@ def get_world():
     return jsonify({"status": "ok", "world": server_manager.server.world.to_dict()})
 
 
-@blueprint.route("/disconnect_user", methods=["POST"])
+@app.route("/disconnect_user", methods=["POST"])
 def disconnect_user():
     # code = request.args.get("code")
 
@@ -147,7 +147,7 @@ def disconnect_user():
     return jsonify({"status": "ok"})
 
 
-@blueprint.route("/set_block", methods=["POST"])
+@app.route("/set_block", methods=["POST"])
 def set_block():
     # code = request.args.get("code")
 
@@ -163,7 +163,7 @@ def set_block():
     server_manager.save_servers()
 
 
-@blueprint.route("/remove_block", methods=["POST"])
+@app.route("/remove_block", methods=["POST"])
 def remove_block():
     # code = request.args.get("code")
 
@@ -183,7 +183,7 @@ def remove_block():
 
     return jsonify({"status": "error"})
 
-# @blueprint.route("/pop_block", methods=["POST"])
+# @app.route("/pop_block", methods=["POST"])
 # def pop_block():
 #     # code = request.args.get("code")
 #

@@ -8,7 +8,7 @@ from app.ServerManager import ServerManager
 app = Flask(__name__)
 
 
-blueprint = Blueprint('api', __name__, template_folder='templates')
+#blueprint = Blueprint('api', __name__, template_folder='templates')
 #
 # db = SQLAlchemy()
 # db.init_app(application)
