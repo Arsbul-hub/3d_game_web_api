@@ -2,7 +2,7 @@ import dataclasses
 
 from dataclasses import dataclass
 
-from panda3d.core import Vec3
+
 
 blocks = {
     "cobblestone": {"texture": "cobblestone", "breakable": True},
@@ -47,7 +47,7 @@ class World:
     def remove_block(self, pos):
         x, y, z = pos
         for block in self.world:
-            if Vec3(x, y, z) == pos and blocks[block["type"]]["breakable"]:
+            if block["pos"] == pos and blocks[block["type"]]["breakable"]:
                 self.world.remove(block)
                 return block
 
