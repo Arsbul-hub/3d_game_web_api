@@ -1,7 +1,7 @@
 import time
 from threading import Thread
 #
-from app import application, blueprint, api
+from app import app, blueprint, api
 from app.server_tasks import BackgroundTask
 # def f():
 #     while True:
@@ -13,5 +13,5 @@ BackgroundTask().start()
 if __name__ == '__main__':
     # db_session.global_init("application.db")
 
-    application.register_blueprint(api.blueprint)
-    application.run(host='0.0.0.0', port=2000, debug=False)
+    app.register_blueprint(api.blueprint)
+    app.run(host='0.0.0.0', port=2000, debug=False)

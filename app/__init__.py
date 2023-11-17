@@ -11,7 +11,7 @@ from app.ServerManager import ServerManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-application = Flask(__name__)
+app = Flask(__name__)
 
 
 blueprint = Blueprint('api', __name__, template_folder='templates')
