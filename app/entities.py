@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from dacite import from_dict
 
 
 @dataclass

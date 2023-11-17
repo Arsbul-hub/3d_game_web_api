@@ -1,7 +1,5 @@
-import time
-from threading import Thread
-#
-from app import app, blueprint, api
+
+from app import app, api
 from app.server_tasks import BackgroundTask
 # def f():
 #     while True:

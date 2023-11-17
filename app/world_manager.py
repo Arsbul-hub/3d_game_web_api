@@ -1,5 +1,5 @@
 import dataclasses
-import json
+
 from dataclasses import dataclass
 
 from panda3d.core import Vec3
