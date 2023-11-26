@@ -5,8 +5,9 @@ from dataclasses import dataclass
 from panda3d.core import Vec3
 
 blocks = {
-    "cobblestone": {"texture": "cobblestone", "breakable": True},
-    "bedrock": {"texture": "bedrock", "breakable": False}
+    "cobblestone": {"type": "cobblestone", "broke_index": 1, "breakable": 1},
+    "boxes": {"type": "boxes", "broke_index": 0, "breakable": 1},
+    "bedrock": {"type": "bedrock", "broke_index": 0, "breakable": 0}
 }
 
 
@@ -17,9 +18,12 @@ def generate_default():
         for y in range(sy):
             for x in range(sx):
                 if z == 0:
-                    block = {"type": "bedrock", "pos": [x, y, z]}
+                    block = blocks["bedrock"].copy()
+                    block["pos"] = [x, y, z]
+                    #print(blocks["bedrock"], block)
                 else:
-                    block = {"type": "cobblestone", "pos": [x, y, z]}
+                    block = blocks["cobblestone"].copy()
+                    block["pos"] = [x, y, z]
                 out.append(block)
     return out
 
@@ -40,17 +44,28 @@ class World:
         else:
             self.world = world
 
-    def set_block(self, block_type, pos):
-        if block_type in blocks:
-            self.world.insert(0, {"type": block_type, "pos": pos})
+    def set_block(self, inventory_item_name, pos):
+        if inventory_item_name in blocks:
+            new_block = blocks[inventory_item_name].copy()
+            new_block["pos"] = pos
+            self.world.insert(0, new_block)
 
     def remove_block(self, pos):
         x, y, z = pos
         for block in self.world:
             xs, ys, zs = block["pos"]
-            if Vec3(pos) == Vec3(xs, ys, zs) and blocks[block["type"]]["breakable"]:
+            if Vec3(pos) == Vec3(xs, ys, zs) and block["breakable"]:
+                if block["broke_index"] > 0:
+                    block["broke_index"] -= 1
+                else:
+                    self.world.remove(block)
+                return block
 
-                self.world.remove(block)
+    def search_block(self, pos):
+        x, y, z = pos
+        for block in self.world:
+            xs, ys, zs = block["pos"]
+            if Vec3(pos) == Vec3(xs, ys, zs):
                 return block
 
     def search_entity(self, name):
@@ -64,4 +79,4 @@ class World:
                 self.entities.remove(entity)
 
     def to_dict(self):
-        return {"entities": {e.name: dataclasses.asdict(e) for e in self.entities}, "world": self.world}
+        return {"entities": {e.name: e.to_dict() for e in self.entities}, "world": self.world}

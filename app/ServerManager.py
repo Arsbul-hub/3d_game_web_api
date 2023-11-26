@@ -1,14 +1,10 @@
-
 import datetime
 from dataclasses import dataclass
 import json
 import os
 import random
 
-
-
-from app.entities import Entity
-
+from app.entities import Entity, Player
 
 from app.world_manager import World
 
@@ -32,9 +28,11 @@ class Server:
             self.invite_code = invite_code
 
     def connect_player(self, name):
-        self.players.append(Entity(name))
+        entity = Player(name=name, scale=(.5, .5, 2))
+        self.players.append(entity)
 
-        self.world.entities.append(Entity(name))
+        self.world.entities.append(entity)
+        return entity
 
     def disconnect_player(self, name):
 
