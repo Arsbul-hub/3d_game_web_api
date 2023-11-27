@@ -54,9 +54,10 @@ def connect_user():
     if server_manager.server.search_player(player_name):
         return jsonify({"status": "error"})
     server_manager.server.connect_player(player_name)
-
-    server_manager.server.search_player(player_name).add_to_inventory("cobblestone", 20)
-    server_manager.server.search_player(player_name).add_to_inventory("boxes", 20)
+    player = server_manager.server.search_player(player_name)
+    player.inventory = []
+    player.add_to_inventory("cobblestone", 20)
+    player.add_to_inventory("boxes", 20)
     # if server.invite_code != code:
     #     return jsonify({"status": "error"})
     return jsonify({"status": "ok"})

@@ -20,10 +20,12 @@ def generate_default():
                 if z == 0:
                     block = blocks["bedrock"].copy()
                     block["pos"] = [x, y, z]
+                    block["broke"] = block["broke_index"]
                     #print(blocks["bedrock"], block)
                 else:
                     block = blocks["cobblestone"].copy()
                     block["pos"] = [x, y, z]
+                    block["broke"] = block["broke_index"]
                 out.append(block)
     return out
 
@@ -47,6 +49,7 @@ class World:
     def set_block(self, inventory_item_name, pos):
         if inventory_item_name in blocks:
             new_block = blocks[inventory_item_name].copy()
+            new_block["broke"] = new_block["broke_index"]
             new_block["pos"] = pos
             self.world.insert(0, new_block)
 
@@ -55,8 +58,8 @@ class World:
         for block in self.world:
             xs, ys, zs = block["pos"]
             if Vec3(pos) == Vec3(xs, ys, zs) and block["breakable"]:
-                if block["broke_index"] > 0:
-                    block["broke_index"] -= 1
+                if block["broke"] > 0:
+                    block["broke"] -= 1
                 else:
                     self.world.remove(block)
                 return block

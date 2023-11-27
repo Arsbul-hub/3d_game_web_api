@@ -29,10 +29,9 @@ class Entity:
         return {"username": self.name, "pos": self.pos, "scale": self.scale, "hpr": self.hpr, "health": self.health}
 
 
-@dataclass
 class Player(Entity):
+    inventory: list = []
     kills: int = 0
-    inventory = []
 
     def add_to_inventory(self, item_type, count=1):
         item = self.search_item(item_type)

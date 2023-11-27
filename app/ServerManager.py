@@ -4,7 +4,7 @@ import json
 import os
 import random
 
-from app.entities import Entity, Player
+from app.entities import Player
 
 from app.world_manager import World
 
