@@ -5,9 +5,9 @@ from dataclasses import dataclass
 from panda3d.core import Vec3
 
 blocks = {
-    "cobblestone": {"type": "cobblestone", "broke_index": 1, "breakable": 1},
-    "boxes": {"type": "boxes", "broke_index": 0, "breakable": 1},
-    "bedrock": {"type": "bedrock", "broke_index": 0, "breakable": 0}
+    "cobblestone": {"name": "cobblestone", "broke_index": 1, "breakable": 1},
+    "boxes": {"name": "boxes", "broke_index": 0, "breakable": 1},
+    "bedrock": {"name": "bedrock", "broke_index": 0, "breakable": 0}
 }
 
 
@@ -58,10 +58,12 @@ class World:
         for block in self.world:
             xs, ys, zs = block["pos"]
             if Vec3(pos) == Vec3(xs, ys, zs) and block["breakable"]:
+
                 if block["broke"] > 0:
                     block["broke"] -= 1
-                else:
+                if block["broke"] == 0:
                     self.world.remove(block)
+                print(block)
                 return block
 
     def search_block(self, pos):

@@ -33,7 +33,7 @@ def get_server():
     # code = request.args.get("code")
 
     server_name = request.args.get("name")
-    #print(server_name)
+    # print(server_name)
     # server = server_manager.get_server(server_name)
     #
     # if server.invite_code != code:
@@ -58,6 +58,8 @@ def connect_user():
     player.inventory = []
     player.add_to_inventory("cobblestone", 20)
     player.add_to_inventory("boxes", 20)
+    player.add_to_inventory("axe", 1)
+    player.add_to_inventory("gun", 1)
     # if server.invite_code != code:
     #     return jsonify({"status": "error"})
     return jsonify({"status": "ok"})
@@ -171,7 +173,7 @@ def set_block():
         player.remove_from_inventory(inventory_item_name)
 
     server_manager.save_servers()
-
+    return jsonify({"status": "ok"})
 
 @app.route("/remove_block", methods=["POST"])
 def remove_block():
@@ -183,27 +185,29 @@ def remove_block():
     z = request.args.get("z")
     y = request.args.get("y")
     player_name = request.args.get("player_name")
-    #inventory_item_name = request.args.get("item_name")
+    # inventory_item_name = request.args.get("item_name")
     #
     # if server.invite_code != code:
     #     return jsonify({"status": "error"})
     player = server_manager.server.search_player(player_name)
-    block = server_manager.server.world.search_block((float(x), float(y), float(z)))
-    inventory_item = player.search_item(block["type"])
-    if inventory_item:
-        #print(block["type"])
-        server_manager.server.world.remove_block((float(x), float(y), float(z)))
-        player.add_to_inventory(block["type"])
-    #block = server_manager.server.world.remove_block((float(x), float(y), float(z)))
+    #block = server_manager.server.world.search_block((float(x), float(y), float(z)))
+    #inventory_item = player.search_item(block["name"])
+    #if inventory_item:
+        # print(block["type"])
+
+    block = server_manager.server.world.remove_block((float(x), float(y), float(z)))
+    if block["broke"] <= 0: # is broken
+        player.add_to_inventory(block["name"])
+    # block = server_manager.server.world.remove_block((float(x), float(y), float(z)))
     server_manager.save_servers()
     # print(block)
     # if block:
     #     return jsonify({"status": "ok", "block": block})
     #
-    # return jsonify({"status": "error"})
+    return jsonify({"status": "error"})
 
 # @app.route("/pop_block", methods=["POST"])
-# def pop_block():
+# def pop_block():ff
 #     # code = request.args.get("code")
 #
 #     server_name = request.args.get("name")
