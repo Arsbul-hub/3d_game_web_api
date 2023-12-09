@@ -61,7 +61,7 @@ class World:
 
                 if block["broke"] > 0:
                     block["broke"] -= 1
-                if block["broke"] == 0:
+                else:
                     self.world.remove(block)
                 print(block)
                 return block
@@ -85,3 +85,9 @@ class World:
 
     def to_dict(self):
         return {"entities": {e.name: e.to_dict() for e in self.entities}, "world": self.world}
+    def to_dict_entities(self):
+
+        return {e.name: e.to_dict() for e in self.entities}
+    def to_dict_world(self):
+
+        return self.world

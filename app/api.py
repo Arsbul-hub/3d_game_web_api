@@ -131,7 +131,21 @@ def get_world():
     # if server.invite_code != code:
     #     return jsonify({"status": "error"})
 
-    return jsonify({"status": "ok", "world": server_manager.server.world.to_dict()})
+    return jsonify({"status": "ok", "data": server_manager.server.world.to_dict_world()})
+
+
+@app.route("/get_entities", methods=["GET"])
+def get_entities():
+    # code = request.args.get("code")
+
+    server_name = request.args.get("name")
+
+    # server = server_manager.get_server(server_name)
+    #
+    # if server.invite_code != code:
+    #     return jsonify({"status": "error"})
+
+    return jsonify({"status": "ok", "data": server_manager.server.world.to_dict_entities()})
 
 
 @app.route("/disconnect_user", methods=["POST"])
@@ -175,6 +189,7 @@ def set_block():
     server_manager.save_servers()
     return jsonify({"status": "ok"})
 
+
 @app.route("/remove_block", methods=["POST"])
 def remove_block():
     # code = request.args.get("code")
@@ -190,13 +205,13 @@ def remove_block():
     # if server.invite_code != code:
     #     return jsonify({"status": "error"})
     player = server_manager.server.search_player(player_name)
-    #block = server_manager.server.world.search_block((float(x), float(y), float(z)))
-    #inventory_item = player.search_item(block["name"])
-    #if inventory_item:
-        # print(block["type"])
+    # block = server_manager.server.world.search_block((float(x), float(y), float(z)))
+    # inventory_item = player.search_item(block["name"])
+    # if inventory_item:
+    # print(block["type"])
 
     block = server_manager.server.world.remove_block((float(x), float(y), float(z)))
-    if block["broke"] <= 0: # is broken
+    if block["broke"] <= 0:  # is broken
         player.add_to_inventory(block["name"])
     # block = server_manager.server.world.remove_block((float(x), float(y), float(z)))
     server_manager.save_servers()
