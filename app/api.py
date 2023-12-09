@@ -212,6 +212,7 @@ def remove_block():
 
     block = server_manager.server.world.remove_block((float(x), float(y), float(z)))
     if block["broke"] <= 0:  # is broken
+
         player.add_to_inventory(block["name"])
     # block = server_manager.server.world.remove_block((float(x), float(y), float(z)))
     server_manager.save_servers()

@@ -5,9 +5,9 @@ from dataclasses import dataclass
 from panda3d.core import Vec3
 
 blocks = {
-    "cobblestone": {"name": "cobblestone", "broke_index": 1, "breakable": 1},
-    "boxes": {"name": "boxes", "broke_index": 0, "breakable": 1},
-    "bedrock": {"name": "bedrock", "broke_index": 0, "breakable": 0}
+    "cobblestone": {"name": "cobblestone", "broke_index": 2, "breakable": 1},
+    "boxes": {"name": "boxes", "broke_index": 1, "breakable": 1},
+    "bedrock": {"name": "bedrock", "broke_index": 2, "breakable": 0}
 }
 
 
@@ -59,7 +59,7 @@ class World:
             xs, ys, zs = block["pos"]
             if Vec3(pos) == Vec3(xs, ys, zs) and block["breakable"]:
 
-                if block["broke"] > 0:
+                if block["broke"] - 1 > 0:
                     block["broke"] -= 1
                 else:
                     self.world.remove(block)
