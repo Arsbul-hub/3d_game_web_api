@@ -12,4 +12,4 @@ if __name__ == '__main__':
     # db_session.global_init("application.db")
 
     #app.register_blueprint(api.blueprint)
-    app.run(port=2000, debug=False)
+    app.run(host="0.0.0.0", port=2000, debug=False)
