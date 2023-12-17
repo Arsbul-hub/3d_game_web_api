@@ -9,11 +9,13 @@ class BackgroundTask(Thread):
 
     def task(self):
         while True:
-
-            for player_name in list(server_manager.server.last_packets_sent):
-                timestamp = server_manager.server.last_packets_sent[player_name]
-                if (datetime.datetime.now() - timestamp).seconds > 5:
-                    server_manager.server.disconnect_player(player_name)
+            try:
+                for player_name, timestamp in server_manager.server.last_packets_sent.items():
+                    if (datetime.datetime.now() - timestamp).seconds > 5:
+                        print("Kicked player sucsess!")
+                        server_manager.server.disconnect_player(player_name)
+            except:
+                print("Error, while try to get players list")
             #print(server_manager.server.players)
             # for player in server_manager.server.players:
             #     if player.
